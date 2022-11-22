@@ -1,14 +1,20 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
-const PORT = process.env.PORT || 5000;
+require("dotenv").config();
+
+const { MONGO_DB_URL, PORT } = process.env;
 
 const app = express();
 
 const start = async () => {
   try {
-    app.listen(PORT, () => console.log(`server started on port ${PORT}`));
-  } catch (e) {
-    console.log(e);
+    await mongoose.connect(`${MONGO_DB_URL}`);
+    console.log('MongoDB connected');
+
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+  } catch (error) {
+    console.log('Failed to connect to MongoDB', error);
   }
 };
 
