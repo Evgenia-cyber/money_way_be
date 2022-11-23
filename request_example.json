@@ -1,0 +1,22 @@
+{
+  "registration_right_request_body": {
+    "email": "123",
+    "password": "123",
+    "fullName": "123",
+    "registrationStartTime": 123,
+    "registrationPeriod": 123,
+    "payment": 123,
+    "phone": "123",
+    "comment": "123"
+  },
+  "registration_wrong_request_body": {
+    "email": "123",
+    "password": "123",
+    "fullName": "123",
+    "registrationStartTime": 123,
+    "registrationPeriod": 123,
+    "payment": "a",
+    "phone": "123",
+    "comment": "123"
+  }
+}
