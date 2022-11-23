@@ -17,6 +17,11 @@ const constants = {
     UNAUTHORIZED: 'Unauthorized',
     FORBIDDEN: 'Forbidden',
   },
+
+  roles: {
+    ADMIN: 'ADMIN',
+    USER: 'USER',
+  },
 };
 
 module.exports = constants;
