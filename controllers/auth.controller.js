@@ -95,12 +95,12 @@ class AuthController {
       const user = await User.findOne({ email });
       if (!user) {
         return res
-          .status(statusCodes.NOT_FOUND)
+          .status(statusCodes.FORBIDDEN)
           .json('Введён неверный email и/или пароль');
       }
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
-      const isValidPassword = bcrypt.compareSync(password, user.password);
-      if (!isValidPassword) {
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+      if (!isPasswordValid) {
         return res
           .status(statusCodes.FORBIDDEN)
           .json('Введён неверный email и/или пароль');
