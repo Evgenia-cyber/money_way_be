@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const { statusCodes, roles } = require('../constants');
 const User = require('../models/User');
 const Role = require('../models/Role');
+const generateAccessToken = require('../utils/generate_access_token');
 
 class AuthController {
   // регистрация пользователя
@@ -106,9 +107,13 @@ class AuthController {
           .json('Введён неверный email и/или пароль');
       }
 
+      // если у пользователя совпал пароль, то создаём токен
+      // eslint-disable-next-line no-underscore-dangle
+      const token = generateAccessToken(user._id, user.roles);
+
       return res
         .status(statusCodes.OK)
-        .json({ message: 'Пользователь успешно залогинился' });
+        .json({ message: 'Пользователь успешно залогинился', token });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Login error: ', error);
