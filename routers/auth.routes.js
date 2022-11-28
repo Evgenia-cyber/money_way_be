@@ -1,5 +1,6 @@
 const Router = require('express');
 const controller = require('../controllers/auth.controller');
+const loginValidate = require('../middleware/login.validate');
 const registrationValidate = require('../middleware/registration.validate');
 
 
@@ -9,6 +10,6 @@ const router = new Router();
 router.post('/registration', registrationValidate(), controller.registration);
 
 // http://localhost:5000/auth/login
-router.post('/login', controller.login);
+router.post('/login',loginValidate(), controller.login);
 
 module.exports = router;

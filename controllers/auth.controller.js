@@ -78,23 +78,32 @@ class AuthController {
   // авторизация пользователя
   static async login(req, res) {
     try {
+      // валидируем данные, полученные с клиента
+      const validationErrors = validationResult(req);
+      if (!validationErrors.isEmpty()) {
+        return res.status(statusCodes.BAD_REQUEST).json({
+          message: `Ошибка при логине:`,
+          errors: validationErrors,
+        });
+      }
+
       const {
         email, // String
         password, // String
       } = req.body;
 
-      const user = await User.findOne(email);
+      const user = await User.findOne({ email });
       if (!user) {
         return res
           .status(statusCodes.NOT_FOUND)
-          .json('Пользователь с таким email не найден');
+          .json('Введён неверный email и/или пароль');
       }
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
       const isValidPassword = bcrypt.compareSync(password, user.password);
-      if(!isValidPassword){
+      if (!isValidPassword) {
         return res
-        .status(statusCodes.FORBIDDEN)
-        .json('Введён неверный email и/или пароль');
+          .status(statusCodes.FORBIDDEN)
+          .json('Введён неверный email и/или пароль');
       }
 
       return res

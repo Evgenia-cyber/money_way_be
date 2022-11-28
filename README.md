@@ -29,3 +29,25 @@ http://localhost:5000/auth/registration
 **400** 
 
 ---
+
+http://localhost:5000/auth/login
+
+### PARAMS:
+
+`email` - String required
+
+`password` - String required
+
+### SUCCESS:
+
+**200** : `{ "message": "Пользователь успешно залогинился" }`
+
+### ERROR CODE:
+
+**400** 
+
+**403**  - введён неверный пароль
+
+**404**  - введён неверный email
+
+---
