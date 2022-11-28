@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { validationResult } = require('express-validator');
 const { statusCodes, roles } = require('../constants');
 const User = require('../models/User');
 const Role = require('../models/Role');
@@ -12,6 +13,13 @@ class AuthController {
       // const userRole = new Role();
       // await adminRole.save();
       // await userRole.save();
+
+      const validationErrors = validationResult(req);
+      if (!validationErrors.isEmpty()) {
+        return res
+          .status(statusCodes.BAD_REQUEST)
+          .json({ message: `Ошибка при регистрации:`, errors: validationErrors });
+      }
 
       const {
         email, // String uniq required

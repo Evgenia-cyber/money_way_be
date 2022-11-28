@@ -6,7 +6,7 @@ http://localhost:5000/auth/registration
 
 `email` - String uniq required
 
-`password` - String required
+`password` - String required - от 7 до 10 символов
 
 `fullName` - String required
 
@@ -16,18 +16,16 @@ http://localhost:5000/auth/registration
 
 `payment` - Number required
 
-`phone` - String required
+`phone` - String required - значением поля может быть пустая строка
 
-`comment` - String
+`comment` - String not required
 
 ### SUCCESS:
 
 **200** : `{ "message": "Пользователь успешно зарегистрирован" }`
 
-### ERROR:
+### ERROR CODE:
 
-**400** : `{ "message": "Пользователь с таким email и/или номером телефона уже существует" }`
-
-**400** : `{ "message": "Registration error: Error: Illegal arguments: undefined, string" }`
+**400** 
 
 ---
