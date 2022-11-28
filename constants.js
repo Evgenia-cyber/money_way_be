@@ -10,14 +10,6 @@ const constants = {
     INTERNAL_SERVER_ERROR: 500,
   },
 
-  messages: {
-    BAD_REQUEST: 'Bad request',
-    NOT_FOUND: 'not found',
-    INTERNAL_SERVER_ERROR: 'Internal server error',
-    UNAUTHORIZED: 'Unauthorized',
-    FORBIDDEN: 'Forbidden',
-  },
-
   roles: {
     ADMIN: 'ADMIN',
     USER: 'USER',

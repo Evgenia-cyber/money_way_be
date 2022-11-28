@@ -14,11 +14,13 @@ class AuthController {
       // await adminRole.save();
       // await userRole.save();
 
+      // валидируем данные, полученные с клиента
       const validationErrors = validationResult(req);
       if (!validationErrors.isEmpty()) {
-        return res
-          .status(statusCodes.BAD_REQUEST)
-          .json({ message: `Ошибка при регистрации:`, errors: validationErrors });
+        return res.status(statusCodes.BAD_REQUEST).json({
+          message: `Ошибка при регистрации:`,
+          errors: validationErrors,
+        });
       }
 
       const {
@@ -47,6 +49,7 @@ class AuthController {
 
       const userRole = await Role.findOne({ role: roles.USER });
 
+      // добавляем нового пользователя в БД
       const newUser = new User({
         email,
         password: hashPassword,
@@ -75,11 +78,34 @@ class AuthController {
   // авторизация пользователя
   static async login(req, res) {
     try {
-      res.status(statusCodes.OK).json({ message: 'Login work' });
+      const {
+        email, // String
+        password, // String
+      } = req.body;
+
+      const user = await User.findOne(email);
+      if (!user) {
+        return res
+          .status(statusCodes.NOT_FOUND)
+          .json('Пользователь с таким email не найден');
+      }
+      // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
+      const isValidPassword = bcrypt.compareSync(password, user.password);
+      if(!isValidPassword){
+        return res
+        .status(statusCodes.FORBIDDEN)
+        .json('Введён неверный email и/или пароль');
+      }
+
+      return res
+        .status(statusCodes.OK)
+        .json({ message: 'Пользователь успешно залогинился' });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Login error: ', error);
-      res.status(statusCodes.INTERNAL_SERVER_ERROR).json('Login error');
+      return res
+        .status(statusCodes.BAD_REQUEST)
+        .json({ message: `Login error: ${error}` });
     }
   }
 }
