@@ -60,7 +60,7 @@ class AuthController {
       console.log('Registration error: ', error);
       return res
         .status(statusCodes.BAD_REQUEST)
-        .json(`Registration error: ${error}`);
+        .json({ message: `Registration error: ${error}` });
     }
   }
 
