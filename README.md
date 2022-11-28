@@ -1,6 +1,37 @@
 # money_way_be
 
-http://localhost:5000/auth/registration
+## 1. Логин
+
+http://localhost:5000/auth/login
+
+### PARAMS:
+
+`email` - String required
+
+`password` - String required
+
+### SUCCESS:
+
+**200** :
+
+```
+{
+    "message": "Пользователь успешно залогинился",
+    "token": "............"
+}
+```
+
+### ERROR CODE:
+
+**400**
+
+**403** - введён неверный email или пароль
+
+---
+
+## 2. Регистрация нового пользователя
+
+http://localhost:5000/admin/add
 
 ### PARAMS:
 
@@ -22,45 +53,18 @@ http://localhost:5000/auth/registration
 
 ### SUCCESS:
 
-**200** : 
+**200** :
 
 ```
 {
 
-    "message": "Пользователь успешно зарегистрирован" 
+    "message": "Пользователь успешно зарегистрирован"
 
-}
-```
-
-
-### ERROR CODE:
-
-**400**
-
----
-
-http://localhost:5000/auth/login
-
-### PARAMS:
-
-`email` - String required
-
-`password` - String required
-
-### SUCCESS:
-
-**200** : 
-```
-{ 
-    "message": "Пользователь успешно залогинился", 
-    "token": "............" 
 }
 ```
 
 ### ERROR CODE:
 
 **400**
-
-**403** - введён неверный email или пароль
 
 ---

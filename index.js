@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRouter = require('./routers/auth.routes');
+const adminRouter = require('./routers/admin.routes');
 
 require('dotenv').config();
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 
 const start = async () => {
   try {
