@@ -29,9 +29,13 @@ http://localhost:5000/auth/login
 
 ---
 
-## 2. Регистрация нового пользователя
+## 2. Регистрация нового пользователя - доступно только админу
 
 http://localhost:5000/admin/add
+
+### HEADERS:
+
+**"Authorization"**: "Bearer ................" - token, полученный при логине
 
 ### PARAMS:
 

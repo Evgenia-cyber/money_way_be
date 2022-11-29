@@ -15,6 +15,6 @@ router.put('/edit', controller.editUser);
 router.delete('/delete', controller.deleteUser);
 
 // http://localhost:5000/admin/add
-router.post('/add', registrationValidate(), controller.userRegistration);
+router.post('/add', checkIsAdmin, registrationValidate(), controller.userRegistration);
 
 module.exports = router;
