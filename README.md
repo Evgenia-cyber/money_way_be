@@ -82,7 +82,7 @@ http://localhost:5000/admin/users
     "users": [
         {
             "_id": "6384d9b2e0edb38c5211361f",
-            "email": "1",
+            "email": "1@mail.ru",
             "password": "$2a$07$KXzfEJBai1jAAN3aanV0mOO6OuvioliBaIrSau2ZuMe27avkkoHJ.",
             "fullName": " ",
             "registrationStartTime": 123,
@@ -97,7 +97,7 @@ http://localhost:5000/admin/users
         },
         {
             "_id": "638508189129a6c5e8fee68e",
-            "email": "2",
+            "email": "2@mail.ru",
             "password": "$2a$07$zfBH7vT8.NhVFW3OiWtTjuhW/GGrXEi6TTMW1l.qfItGoIvutU1su",
             "fullName": " ",
             "registrationStartTime": 123,

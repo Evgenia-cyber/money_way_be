@@ -49,6 +49,9 @@ class AdminController {
 
       const userRole = await Role.findOne({ role: roles.USER });
 
+      // добавляем в БД админа
+      // const userRole = await Role.findOne({ role: roles.ADMIN });
+
       // добавляем нового пользователя в БД
       const newUser = new User({
         email,
