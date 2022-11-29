@@ -68,3 +68,54 @@ http://localhost:5000/admin/add
 **400**
 
 ---
+## 3. Получение всех пользователей
+
+http://localhost:5000/admin/users
+
+### SUCCESS:
+
+**200** :
+
+```
+{
+    "message": "getAllUsers success",
+    "users": [
+        {
+            "_id": "6384d9b2e0edb38c5211361f",
+            "email": "1",
+            "password": "$2a$07$KXzfEJBai1jAAN3aanV0mOO6OuvioliBaIrSau2ZuMe27avkkoHJ.",
+            "fullName": " ",
+            "registrationStartTime": 123,
+            "registrationPeriod": 123,
+            "payment": 123,
+            "phone": "$2a$07$jPnH1fDKQPRQgT20rLgA4eGzHeuvK7P9tV7e6YVc8WN141rk2xaH2",
+            "comment": "123",
+            "roles": [
+                "USER"
+            ],
+            "__v": 0
+        },
+        {
+            "_id": "638508189129a6c5e8fee68e",
+            "email": "2",
+            "password": "$2a$07$zfBH7vT8.NhVFW3OiWtTjuhW/GGrXEi6TTMW1l.qfItGoIvutU1su",
+            "fullName": " ",
+            "registrationStartTime": 123,
+            "registrationPeriod": 123,
+            "payment": 123,
+            "phone": "$2a$07$.JfBqp6xNCNSQbDXOr0eQ.YDm8su5o.q/5d4RC/QpFEe26B2myNUa",
+            "comment": "123",
+            "roles": [
+                "USER"
+            ],
+            "__v": 0
+        }
+    ]
+}
+```
+
+### ERROR CODE:
+
+**400**
+
+---
