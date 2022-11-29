@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { statusCodes } = require('../constants');
+const { statusCodes, roles } = require('../constants');
 
-const checkJWSToken = (req, res, next) => {
+const checkIsAdmin = (req, res, next) => {
   if (req.method === 'OPTIONS') {
     next();
   }
@@ -17,7 +17,19 @@ const checkJWSToken = (req, res, next) => {
 
     // декодируем токен
     const decodedData = jwt.verify(token, process.env.JWT); // получаем объект с id и roles пользователя
-    req.user = decodedData; // в запросе создаем новое поле user, куда добавляем полученные данные
+    const { roles: userRoles } = decodedData;
+
+    // далее надо проверить, если в списке ролей "ADMIN"
+    let hasRequiredRole = false;
+    if (userRoles.includes(roles.ADMIN)) {
+      hasRequiredRole = true;
+    }
+
+    if (!hasRequiredRole) {
+      return res
+        .status(statusCodes.FORBIDDEN)
+        .json({ message: 'У Вас нет доступа' });
+    }
 
     next();
     return null;
@@ -30,4 +42,4 @@ const checkJWSToken = (req, res, next) => {
   }
 };
 
-module.exports = checkJWSToken;
+module.exports = checkIsAdmin;
