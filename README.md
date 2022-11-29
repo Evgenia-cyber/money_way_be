@@ -68,9 +68,14 @@ http://localhost:5000/admin/add
 **400**
 
 ---
-## 3. Получение всех пользователей
+
+## 3. Получение всех пользователей - доступно только админу
 
 http://localhost:5000/admin/users
+
+### HEADERS:
+
+**"Authorization"**: "Bearer ................" - token, полученный при логине
 
 ### SUCCESS:
 
@@ -109,6 +114,21 @@ http://localhost:5000/admin/users
                 "USER"
             ],
             "__v": 0
+        },
+        {
+            "_id": "6385f96954f87c21ed843096",
+            "email": "admin@mail.ru",
+            "password": "$2a$07$gujcsogLJ9U7WRULps2.4eziIBl67BovxwMTnj5MsMODQHP4D2do2",
+            "fullName": "admin",
+            "registrationStartTime": 0,
+            "registrationPeriod": 0,
+            "payment": 0,
+            "phone": "$2a$07$7vsxL5318.hXoOBlaIC7Q.ql15/QU/yD7UbVOHyUMIShGkLU0rXGC",
+            "comment": " ",
+            "roles": [
+                "ADMIN"
+            ],
+            "__v": 0
         }
     ]
 }
@@ -117,5 +137,6 @@ http://localhost:5000/admin/users
 ### ERROR CODE:
 
 **400**
+**403**
 
 ---
