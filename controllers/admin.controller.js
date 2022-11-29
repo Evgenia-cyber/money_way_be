@@ -45,7 +45,6 @@ class AdminController {
       }
 
       const hashPassword = bcrypt.hashSync(password, 7); // шифруем пароль
-      const hashPhone = bcrypt.hashSync(phone, 7); // шифруем телефон
 
       const userRole = await Role.findOne({ role: roles.USER });
 
@@ -60,7 +59,7 @@ class AdminController {
         registrationStartTime,
         registrationPeriod,
         payment,
-        phone: hashPhone,
+        phone,
         comment,
         roles: [userRole.role],
       });
@@ -81,7 +80,10 @@ class AdminController {
   // получаем всех пользователей
   static async getAllUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await User.find(
+        { roles: [roles.USER] },
+        { _id: false, password: false, roles: false }
+      );
 
       return res
         .status(statusCodes.OK)

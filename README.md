@@ -90,48 +90,33 @@ http://localhost:5000/admin/users
     "message": "getAllUsers success",
     "users": [
         {
-            "_id": "6384d9b2e0edb38c5211361f",
             "email": "1@mail.ru",
-            "password": "$2a$07$KXzfEJBai1jAAN3aanV0mOO6OuvioliBaIrSau2ZuMe27avkkoHJ.",
             "fullName": " ",
             "registrationStartTime": 123,
             "registrationPeriod": 123,
             "payment": 123,
-            "phone": "$2a$07$jPnH1fDKQPRQgT20rLgA4eGzHeuvK7P9tV7e6YVc8WN141rk2xaH2",
+            "phone": "123",
             "comment": "123",
-            "roles": [
-                "USER"
-            ],
             "__v": 0
         },
         {
-            "_id": "638508189129a6c5e8fee68e",
             "email": "2@mail.ru",
-            "password": "$2a$07$zfBH7vT8.NhVFW3OiWtTjuhW/GGrXEi6TTMW1l.qfItGoIvutU1su",
             "fullName": " ",
             "registrationStartTime": 123,
             "registrationPeriod": 123,
             "payment": 123,
-            "phone": "$2a$07$.JfBqp6xNCNSQbDXOr0eQ.YDm8su5o.q/5d4RC/QpFEe26B2myNUa",
+            "phone": "123",
             "comment": "123",
-            "roles": [
-                "USER"
-            ],
             "__v": 0
         },
         {
-            "_id": "6385f96954f87c21ed843096",
-            "email": "admin@mail.ru",
-            "password": "$2a$07$gujcsogLJ9U7WRULps2.4eziIBl67BovxwMTnj5MsMODQHP4D2do2",
+            "email": "7@mail.ru",
             "fullName": "admin",
             "registrationStartTime": 0,
             "registrationPeriod": 0,
             "payment": 0,
-            "phone": "$2a$07$7vsxL5318.hXoOBlaIC7Q.ql15/QU/yD7UbVOHyUMIShGkLU0rXGC",
+            "phone": "123",
             "comment": " ",
-            "roles": [
-                "ADMIN"
-            ],
             "__v": 0
         }
     ]
