@@ -1,6 +1,7 @@
 const Router = require('express');
 const controller = require('../controllers/admin.controller');
 const registrationValidate = require('../middleware/registration.validate');
+const userEditValidate = require('../middleware/user_edit.validate');
 const checkIsAdmin = require('../middleware/check_is_admin');
 
 const router = new Router();
@@ -9,7 +10,7 @@ const router = new Router();
 router.get('/users', checkIsAdmin, controller.getAllUsers);
 
 // http://localhost:5000/admin/edit
-router.put('/edit', controller.editUser);
+router.put('/edit', checkIsAdmin, userEditValidate(), controller.editUser);
 
 // http://localhost:5000/admin/delete
 router.delete('/delete', controller.deleteUser);

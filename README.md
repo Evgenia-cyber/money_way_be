@@ -129,3 +129,47 @@ http://localhost:5000/admin/users
 **403**
 
 ---
+
+## 4. Редактирование информации о пользователе - доступно только админу
+
+http://localhost:5000/admin/edit
+
+### HEADERS:
+
+**"Authorization"**: "Bearer ................" - token, полученный при логине
+
+### PARAMS:
+
+`_id` - String uniq required
+
+`email` - String uniq required
+
+`fullName` - String required
+
+`registrationStartTime` - Number required
+
+`registrationPeriod` - Number required
+
+`payment` - Number required
+
+`phone` - String required - значением поля может быть пустая строка
+
+`comment` - String not required
+
+### SUCCESS:
+
+**200** :
+
+```
+{
+
+    "message": "Информация о пользователе успешно изменена"
+
+}
+```
+
+### ERROR CODE:
+
+**400**, **404**
+
+---

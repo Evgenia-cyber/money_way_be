@@ -82,7 +82,7 @@ class AdminController {
     try {
       const users = await User.find(
         { roles: [roles.USER] },
-        { _id: false, password: false, roles: false }
+        { password: false, roles: false }
       );
 
       return res
@@ -100,7 +100,54 @@ class AdminController {
   // редактируем инфо о пользователе
   static async editUser(req, res) {
     try {
-      return res.status(statusCodes.OK).json({ message: 'editUser success' });
+      // валидируем данные, полученные с клиента
+      const validationErrors = validationResult(req);
+      if (!validationErrors.isEmpty()) {
+        return res.status(statusCodes.BAD_REQUEST).json({
+          message: `Ошибка при редактировании информации о пользователе:`,
+          errors: validationErrors,
+        });
+      }
+
+      const {
+        _id, // String uniq required
+        email, // String uniq required
+        fullName, // String required
+        registrationStartTime, // Number required
+        registrationPeriod, // Number required
+        payment, // Number required
+        phone, // String required
+        comment, // String
+      } = req.body;
+
+      const user = await User.findOne({ _id });
+      // если такой пользователь существует:
+      if (user) {
+        const { _id: userId } = user;
+
+        await User.updateOne(
+          { _id: userId },
+          {
+            $set: {
+              email,
+              fullName,
+              registrationStartTime,
+              registrationPeriod,
+              payment,
+              phone,
+              comment,
+            },
+          }
+        );
+
+        return res
+          .status(statusCodes.OK)
+          .json({ message: 'Информация о пользователе успешно изменена' });
+      }
+
+      return res
+        .status(statusCodes.NOT_FOUND)
+        .json('Такого пользователя не существует');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('editUser error: ', error);
