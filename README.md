@@ -173,3 +173,33 @@ http://localhost:5000/admin/edit
 **400**, **404**
 
 ---
+
+## 4. Удаление пользователя - доступно только админу
+
+http://localhost:5000/admin/delete
+
+### HEADERS:
+
+**"Authorization"**: "Bearer ................" - token, полученный при логине
+
+### PARAMS:
+
+`_id` - String uniq required
+
+### SUCCESS:
+
+**200** :
+
+```
+{
+
+    "message": "Пользователь успешно удалён"
+
+}
+```
+
+### ERROR CODE:
+
+**400**, **404**
+
+---

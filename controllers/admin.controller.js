@@ -150,7 +150,15 @@ class AdminController {
   // удаляем пользователя
   static async deleteUser(req, res) {
     try {
-      return res.status(statusCodes.OK).json({ message: 'deleteUser success' });
+      const {
+        _id, // String uniq required
+      } = req.body;
+
+      await User.deleteOne({ _id });
+
+      return res
+        .status(statusCodes.OK)
+        .json({ message: 'Пользователь успешно удалён' });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('deleteUser error: ', error);

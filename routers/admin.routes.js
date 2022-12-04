@@ -20,7 +20,12 @@ router.put(
 );
 
 // http://localhost:5000/admin/delete
-router.delete('/delete', controller.deleteUser);
+router.delete(
+  '/delete',
+  checkIsAdmin,
+  checkIsUserExists,
+  controller.deleteUser
+);
 
 // http://localhost:5000/admin/add
 router.post(
