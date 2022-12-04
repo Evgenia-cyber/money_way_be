@@ -26,14 +26,14 @@ class AuthController {
       if (!user) {
         return res
           .status(statusCodes.FORBIDDEN)
-          .json('Введён неверный email и/или пароль');
+          .json({ message: 'Введён неверный email и/или пароль' });
       }
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
       const isPasswordValid = bcrypt.compareSync(password, user.password);
       if (!isPasswordValid) {
         return res
           .status(statusCodes.FORBIDDEN)
-          .json('Введён неверный email и/или пароль');
+          .json({ message: 'Введён неверный email и/или пароль' });
       }
 
       // если у пользователя совпал пароль, то создаём токен
