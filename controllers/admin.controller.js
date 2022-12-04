@@ -120,34 +120,24 @@ class AdminController {
         comment, // String
       } = req.body;
 
-      const user = await User.findOne({ _id });
-      // если такой пользователь существует:
-      if (user) {
-        const { _id: userId } = user;
-
-        await User.updateOne(
-          { _id: userId },
-          {
-            $set: {
-              email,
-              fullName,
-              registrationStartTime,
-              registrationPeriod,
-              payment,
-              phone,
-              comment,
-            },
-          }
-        );
-
-        return res
-          .status(statusCodes.OK)
-          .json({ message: 'Информация о пользователе успешно изменена' });
-      }
+      await User.updateOne(
+        { _id },
+        {
+          $set: {
+            email,
+            fullName,
+            registrationStartTime,
+            registrationPeriod,
+            payment,
+            phone,
+            comment,
+          },
+        }
+      );
 
       return res
-        .status(statusCodes.NOT_FOUND)
-        .json('Такого пользователя не существует');
+        .status(statusCodes.OK)
+        .json({ message: 'Информация о пользователе успешно изменена' });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('editUser error: ', error);

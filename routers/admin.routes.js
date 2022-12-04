@@ -3,6 +3,7 @@ const controller = require('../controllers/admin.controller');
 const registrationValidate = require('../middleware/registration.validate');
 const userEditValidate = require('../middleware/user_edit.validate');
 const checkIsAdmin = require('../middleware/check_is_admin');
+const checkIsUserExists = require('../middleware/check_is_user_exists');
 
 const router = new Router();
 
@@ -10,12 +11,23 @@ const router = new Router();
 router.get('/users', checkIsAdmin, controller.getAllUsers);
 
 // http://localhost:5000/admin/edit
-router.put('/edit', checkIsAdmin, userEditValidate(), controller.editUser);
+router.put(
+  '/edit',
+  checkIsAdmin,
+  userEditValidate(),
+  checkIsUserExists,
+  controller.editUser
+);
 
 // http://localhost:5000/admin/delete
 router.delete('/delete', controller.deleteUser);
 
 // http://localhost:5000/admin/add
-router.post('/add', checkIsAdmin, registrationValidate(), controller.userRegistration);
+router.post(
+  '/add',
+  checkIsAdmin,
+  registrationValidate(),
+  controller.userRegistration
+);
 
 module.exports = router;
