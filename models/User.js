@@ -10,7 +10,7 @@ const User = new Schema({
   payment: { type: Number, required: true },
   phone: { type: String,  required: true },
   comment: { type: String },
-  roles: [{ type: String, ref: 'Role' }],
+  roles: [{ type: String, ref: 'Role' }], // это поле ссылается на модель Role
 });
 
 module.exports = model('User', User);

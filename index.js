@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const authRouter = require('./routers/auth.routes');
 const adminRouter = require('./routers/admin.routes');
 
@@ -10,6 +12,8 @@ const { MONGO_DB_URL, PORT } = process.env;
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors()); // чтобы не возникало проблем при взаимодействии с сервером из браузера
 
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
