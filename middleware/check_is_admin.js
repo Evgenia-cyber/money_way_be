@@ -16,7 +16,7 @@ const checkIsAdmin = (req, res, next) => {
     }
 
     // декодируем токен
-    const decodedData = jwt.verify(token, process.env.JWT); // получаем объект с id и roles пользователя
+    const decodedData = jwt.verify(token, process.env.JWT_ACCESS); // получаем объект с id и roles пользователя
     const { roles: userRoles } = decodedData;
 
     // далее надо проверить, если в списке ролей "ADMIN"

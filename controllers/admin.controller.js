@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const { statusCodes, roles } = require('../constants');
 const User = require('../models/User');
 const Role = require('../models/Role');
-const TokenUtil = require('../utils/Token');
+const addTokens = require('../utils/addTokens');
 
 class AdminController {
   // регистрация пользователя
@@ -66,19 +66,9 @@ class AdminController {
       });
       const savedUser = await newUser.save();
 
+      // создаем и сохраняем токены в БД и куках
       const { _id } = savedUser;
-      const { accessToken, refreshToken } = TokenUtil.generateTokens({
-        _id,
-        roles,
-      });
-      await TokenUtil.saveToken(_id, refreshToken);
-
-      // записываем refreshToken в cookie:
-      res.cookie('refreshToken', refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000, // кука, как и refreshToken, будет жить 30 дней
-        httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
-        // secure: true, // TODO: для https - соединение должно быть установлено через HTTPS, иначе в cookie ничего не запишется
-      });
+      const { accessToken, refreshToken } = await addTokens(_id, roles, res);
 
       return res.status(statusCodes.OK).json({
         message: 'Пользователь успешно зарегистрирован',

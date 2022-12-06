@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const { statusCodes } = require('../constants');
 const User = require('../models/User');
-const generateAccessToken = require('../utils/Token');
+const addTokens = require('../utils/addTokens');
 
 class AuthController {
   // авторизация пользователя
@@ -36,14 +36,15 @@ class AuthController {
           .json({ message: 'Введён неверный email и/или пароль' });
       }
 
-      // если у пользователя совпал пароль, то создаём токен
-      // eslint-disable-next-line no-underscore-dangle
-      // TODO: change to generateTokens
-      const token = generateAccessToken(user._id, user.roles);
+      // если у пользователя совпал пароль, то создаём и сохраняем токены в БД и куках
+      const { _id, roles } = user;
+      const { accessToken, refreshToken } = await addTokens(_id, roles, res);
 
-      return res
-        .status(statusCodes.OK)
-        .json({ message: 'Пользователь успешно залогинился', token });
+      return res.status(statusCodes.OK).json({
+        message: 'Пользователь успешно залогинился',
+        accessToken,
+        refreshToken,
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Login error: ', error);
@@ -56,8 +57,6 @@ class AuthController {
   // Обновление токена
   static async refresh(req, res) {
     try {
-     
-
       return res
         .status(statusCodes.OK)
         .json({ message: 'Пользователь успешно залогинился' });

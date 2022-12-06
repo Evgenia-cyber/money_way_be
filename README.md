@@ -17,8 +17,13 @@ http://localhost:5000/auth/login
 ```
 {
     "message": "Пользователь успешно залогинился",
-    "token": "............"
+    "accessToken": "..........",
+    "refreshToken": ".........."
 }
+```
+
+```
+refreshToken добавляется в cookie
 ```
 
 ### ERROR CODE:
