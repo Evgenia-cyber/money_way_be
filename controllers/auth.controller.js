@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const { statusCodes } = require('../constants');
 const User = require('../models/User');
-const generateAccessToken = require('../utils/generate_access_token');
+const generateAccessToken = require('../utils/Token');
 
 class AuthController {
   // авторизация пользователя
@@ -38,6 +38,7 @@ class AuthController {
 
       // если у пользователя совпал пароль, то создаём токен
       // eslint-disable-next-line no-underscore-dangle
+      // TODO: change to generateTokens
       const token = generateAccessToken(user._id, user.roles);
 
       return res

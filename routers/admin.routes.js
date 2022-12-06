@@ -27,10 +27,11 @@ router.delete(
   controller.deleteUser
 );
 
+// TODO: check code
 // http://localhost:5000/admin/add
 router.post(
   '/add',
-  checkIsAdmin,
+  // checkIsAdmin,
   registrationValidate(),
   controller.userRegistration
 );

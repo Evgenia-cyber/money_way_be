@@ -28,6 +28,7 @@ http://localhost:5000/auth/login
 **403** - введён неверный email или пароль
 
 ---
+
 ## 2. Обновление токена
 
 http://localhost:5000/auth/refresh
@@ -44,7 +45,7 @@ http://localhost:5000/auth/refresh
 
 ```
 <!-- {
-    "message": "Пользователь успешно залогинился",
+    "message": "",
     "token": "............"
 } -->
 ```
@@ -89,10 +90,14 @@ http://localhost:5000/admin/add
 
 ```
 {
-
-    "message": "Пользователь успешно зарегистрирован"
-
+    "message": "Пользователь успешно зарегистрирован",
+    "accessToken": "..........",
+    "refreshToken": ".........."
 }
+```
+
+```
+refreshToken добавляется в cookie
 ```
 
 ### ERROR CODE:
