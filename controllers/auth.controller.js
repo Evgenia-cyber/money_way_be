@@ -51,6 +51,23 @@ class AuthController {
         .json({ message: `Login error: ${error}` });
     }
   }
+
+  // Обновление токена
+  static async refresh(req, res) {
+    try {
+     
+
+      return res
+        .status(statusCodes.OK)
+        .json({ message: 'Пользователь успешно залогинился' });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Refresh error: ', error);
+      return res
+        .status(statusCodes.BAD_REQUEST)
+        .json({ message: `Refresh error: ${error}` });
+    }
+  }
 }
 
 module.exports = AuthController;

@@ -8,4 +8,7 @@ const router = new Router();
 // http://localhost:5000/auth/login
 router.post('/login',loginValidate(), controller.login);
 
+// http://localhost:5000/auth/refresh
+router.post('/refresh', controller.refresh);
+
 module.exports = router;
