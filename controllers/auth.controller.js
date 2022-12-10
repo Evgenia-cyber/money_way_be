@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const { statusCodes } = require('../constants');
 const User = require('../models/User');
 const addTokens = require('../utils/addTokens');
+const TokenUtil = require('../utils/Token');
 
 class AuthController {
   // авторизация пользователя
@@ -54,12 +55,47 @@ class AuthController {
     }
   }
 
-  // Обновление токена
+  // обновление токенов
   static async refresh(req, res) {
     try {
-      return res
-        .status(statusCodes.OK)
-        .json({ message: 'Пользователь успешно залогинился' });
+      // достаём refreshToken из cookies
+      const { refreshToken } = req.cookies;
+      // если токена нет, то пользователь не авторизован
+      if (!refreshToken) {
+        return res
+          .status(statusCodes.UNAUTHORIZED)
+          .json({ message: 'Пользователь не авторизован' });
+      }
+
+      // валидируем токен: токен д.б. неподделанным и у токен д.б. непросроченным
+      const userData = TokenUtil.validateRefreshToken(refreshToken);
+
+      const tokenData = await TokenUtil.findToken(refreshToken);
+      if (!userData || !tokenData) {
+        return res
+          .status(statusCodes.UNAUTHORIZED)
+          .json({ message: 'Пользователь не авторизован' });
+      }
+      // т.к. токены перезаписываем, то необходимо будет заново их сгенерировать
+      // и сохранить
+      const { id } = userData;
+      // т.к. за это время инфо о пользователе могла поменяться
+      const savedUser = await User.findById(id);
+      if (!savedUser) {
+        return res
+          .status(statusCodes.NOT_FOUND)
+          .json({ message: 'Такого пользователя не существует' });
+      }
+      // создаём и сохраняем токены в БД и куках
+      const { roles } = savedUser;
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+        await addTokens(id, roles, res);
+
+      return res.status(statusCodes.OK).json({
+        message: 'Токены успешно обновлены',
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Refresh error: ', error);

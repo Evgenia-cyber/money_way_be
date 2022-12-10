@@ -7,6 +7,9 @@ const checkIsUserExists = require('../middleware/check_is_user_exists');
 
 const router = new Router();
 
+// http://localhost:5000/admin/roles
+router.post('/roles', checkIsAdmin, controller.saveRoles);
+
 // http://localhost:5000/admin/users
 router.get('/users', checkIsAdmin, controller.getAllUsers);
 

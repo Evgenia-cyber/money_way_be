@@ -2,6 +2,8 @@
 
 ## 1. Логин
 
+**POST**
+
 http://localhost:5000/auth/login
 
 ### PARAMS:
@@ -34,36 +36,35 @@ refreshToken добавляется в cookie
 
 ---
 
-## 2. Обновление токена
+## 2. Обновление токенов
+
+**GET**
 
 http://localhost:5000/auth/refresh
-
-### PARAMS:
-
-<!-- `email` - String required
-
-`password` - String required -->
 
 ### SUCCESS:
 
 **200** :
 
 ```
-<!-- {
-    "message": "",
-    "token": "............"
-} -->
+{
+    "message": "Токены успешно обновлены",
+    "accessToken": "............",
+    "refreshToken": "............"
+}
 ```
 
 ### ERROR CODE:
 
-<!-- **400**
-
-**403** - введён неверный email или пароль -->
+**400**
+**401**
+**404**
 
 ---
 
 ## 3. Регистрация нового пользователя - доступно только админу
+
+**POST**
 
 http://localhost:5000/admin/add
 
@@ -112,6 +113,8 @@ refreshToken добавляется в cookie
 ---
 
 ## 4. Получение всех пользователей - доступно только админу
+
+**GET**
 
 http://localhost:5000/admin/users
 
@@ -170,6 +173,8 @@ http://localhost:5000/admin/users
 
 ## 5. Редактирование информации о пользователе - доступно только админу
 
+**PUT**
+
 http://localhost:5000/admin/edit
 
 ### HEADERS:
@@ -214,6 +219,8 @@ http://localhost:5000/admin/edit
 
 ## 6. Удаление пользователя - доступно только админу
 
+**DELETE**
+
 http://localhost:5000/admin/delete
 
 ### HEADERS:
@@ -239,5 +246,31 @@ http://localhost:5000/admin/delete
 ### ERROR CODE:
 
 **400**, **404**
+
+---
+
+## 7. Сохранение ролей
+
+**POST**
+
+http://localhost:5000/admin/roles
+
+### HEADERS:
+
+**"Authorization"**: "Bearer ................" - token, полученный при логине
+
+### SUCCESS:
+
+**200** :
+
+```
+{
+    "message": "Роли успешно сохранены"
+}
+```
+
+### ERROR CODE:
+
+**400**
 
 ---

@@ -6,15 +6,29 @@ const Role = require('../models/Role');
 const addTokens = require('../utils/addTokens');
 
 class AdminController {
+  // сохраняем роли в БД
+  static async saveRoles(req, res) {
+    try {
+      const adminRole = new Role({ role: roles.ADMIN });
+      const userRole = new Role();
+      await adminRole.save();
+      await userRole.save();
+
+      return res
+        .status(statusCodes.OK)
+        .json({ message: 'Роли успешно сохранены' });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Registration error: ', error);
+      return res
+        .status(statusCodes.BAD_REQUEST)
+        .json({ message: `Registration error: ${error}` });
+    }
+  }
+
   // регистрация пользователя
   static async userRegistration(req, res) {
     try {
-      // сохраняем роли в БД
-      // const adminRole = new Role({ role: roles.ADMIN });
-      // const userRole = new Role();
-      // await adminRole.save();
-      // await userRole.save();
-
       // валидируем данные, полученные с клиента
       const validationErrors = validationResult(req);
       if (!validationErrors.isEmpty()) {

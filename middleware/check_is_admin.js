@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const { statusCodes, roles } = require('../constants');
+const TokenUtil = require('../utils/Token');
 
 const checkIsAdmin = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -7,17 +7,24 @@ const checkIsAdmin = (req, res, next) => {
   }
 
   try {
-    // token отправляют в заголовке authorization обычно в таком виде: "Bearer ............."
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) {
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader) {
       return res
         .status(statusCodes.FORBIDDEN)
         .json({ message: 'Пользователь не авторизован' });
     }
+    // token отправляют в заголовке authorization обычно в таком виде: "Bearer ............."
+    const token = authorizationHeader.split(' ')[1];
 
     // декодируем токен
-    const decodedData = jwt.verify(token, process.env.JWT_ACCESS); // получаем объект с id и roles пользователя
-    const { roles: userRoles } = decodedData;
+    const userData = TokenUtil.validateAccessToken(token); // получаем объект с id и roles пользователя
+    // если нет данных
+    if (!userData) {
+      return res
+        .status(statusCodes.FORBIDDEN)
+        .json({ message: 'Пользователь не авторизован' });
+    }
+    const { roles: userRoles } = userData;
 
     // далее надо проверить, если в списке ролей "ADMIN"
     let hasRequiredRole = false;

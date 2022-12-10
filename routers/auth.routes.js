@@ -9,6 +9,6 @@ const router = new Router();
 router.post('/login',loginValidate(), controller.login);
 
 // http://localhost:5000/auth/refresh
-router.post('/refresh', controller.refresh);
+router.get('/refresh', controller.refresh);
 
 module.exports = router;
