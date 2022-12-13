@@ -7,13 +7,19 @@ const adminRouter = require('./routers/admin.routes');
 
 require('dotenv').config();
 
-const { MONGO_DB_URL, PORT } = process.env;
+const { MONGO_DB_URL, PORT, FRONTEND_URL } = process.env;
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors()); // чтобы не возникало проблем при взаимодействии с сервером из браузера
+// чтобы не возникало проблем при взаимодействии с сервером из браузера, используем cors:
+app.use(
+  cors({
+    credentials: true, // разрешаем куки (в куках хранится refreshToken)
+    origin: FRONTEND_URL, // url фрондента
+  })
+);
 
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
