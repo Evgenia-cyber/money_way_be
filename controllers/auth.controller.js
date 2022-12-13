@@ -45,6 +45,7 @@ class AuthController {
         message: 'Пользователь успешно залогинился',
         accessToken,
         refreshToken,
+        roles,
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -95,6 +96,7 @@ class AuthController {
         message: 'Токены успешно обновлены',
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
+        roles,
       });
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -1,5 +1,7 @@
 # money_way_be
 
+**Ко всем запросам добавляем куки - в них находится refreshToken**
+
 ## 1. Логин
 
 **POST**
@@ -20,7 +22,8 @@ http://localhost:5000/auth/login
 {
     "message": "Пользователь успешно залогинился",
     "accessToken": "..........",
-    "refreshToken": ".........."
+    "refreshToken": "..........",
+    "roles": [ "ADMIN" ]
 }
 ```
 
@@ -50,7 +53,8 @@ http://localhost:5000/auth/refresh
 {
     "message": "Токены успешно обновлены",
     "accessToken": "............",
-    "refreshToken": "............"
+    "refreshToken": "............",
+    "roles": [ "ADMIN" ]
 }
 ```
 
