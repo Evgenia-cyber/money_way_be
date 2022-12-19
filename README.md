@@ -98,14 +98,8 @@ http://localhost:5000/admin/add
 
 ```
 {
-    "message": "Пользователь успешно зарегистрирован",
-    "accessToken": "..........",
-    "refreshToken": ".........."
+    "message": "Новый пользователь успешно добавлен",
 }
-```
-
-```
-refreshToken добавляется в cookie
 ```
 
 ### ERROR CODE:

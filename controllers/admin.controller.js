@@ -3,7 +3,6 @@ const { validationResult } = require('express-validator');
 const { statusCodes, roles } = require('../constants');
 const User = require('../models/User');
 const Role = require('../models/Role');
-const addTokens = require('../utils/addTokens');
 
 class AdminController {
   // сохраняем роли в БД
@@ -76,16 +75,10 @@ class AdminController {
         comment,
         roles: [userRole.role],
       });
-      const savedUser = await newUser.save();
-
-      // создаем и сохраняем токены в БД и куках
-      const { _id } = savedUser;
-      const { accessToken, refreshToken } = await addTokens(_id, roles, res);
+      await newUser.save();
 
       return res.status(statusCodes.OK).json({
-        message: 'Пользователь успешно зарегистрирован',
-        accessToken,
-        refreshToken,
+        message: 'Новый пользователь успешно добавлен',
       });
     } catch (error) {
       // eslint-disable-next-line no-console
