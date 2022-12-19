@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const { statusCodes, roles } = require('../constants');
 const User = require('../models/User');
 const Role = require('../models/Role');
+const Token = require('../models/Token');
 
 class AdminController {
   // сохраняем роли в БД
@@ -165,6 +166,7 @@ class AdminController {
       } = req.body;
 
       await User.deleteOne({ _id });
+      await Token.deleteOne({ userId: _id });
 
       return res
         .status(statusCodes.OK)
