@@ -45,7 +45,6 @@ class AdminController {
         registrationStartTime, // Number required
         registrationPeriod, // Number required
         payment, // Number required
-        phone, // String required
         comment, // String
       } = req.body;
 
@@ -74,7 +73,6 @@ class AdminController {
         registrationStartTime,
         registrationPeriod,
         payment,
-        phone,
         comment,
         roles: [userRole.role],
       });
@@ -137,7 +135,6 @@ class AdminController {
         registrationStartTime, // Number required
         registrationPeriod, // Number required
         payment, // Number required
-        phone, // String required
         comment, // String
       } = req.body;
 
@@ -150,7 +147,6 @@ class AdminController {
             registrationStartTime,
             registrationPeriod,
             payment,
-            phone,
             comment,
           },
         }

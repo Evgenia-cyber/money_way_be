@@ -90,8 +90,6 @@ http://localhost:5000/admin/add
 
 `payment` - Number required
 
-`phone` - String required - значением поля может быть пустая строка
-
 `comment` - String not required
 
 ### SUCCESS:
@@ -140,7 +138,6 @@ http://localhost:5000/admin/users
             "registrationStartTime": 123,
             "registrationPeriod": 123,
             "payment": 123,
-            "phone": "123",
             "comment": "123",
             "__v": 0
         },
@@ -150,7 +147,6 @@ http://localhost:5000/admin/users
             "registrationStartTime": 123,
             "registrationPeriod": 123,
             "payment": 123,
-            "phone": "123",
             "comment": "123",
             "__v": 0
         },
@@ -160,7 +156,6 @@ http://localhost:5000/admin/users
             "registrationStartTime": 0,
             "registrationPeriod": 0,
             "payment": 0,
-            "phone": "123",
             "comment": " ",
             "__v": 0
         }
@@ -198,8 +193,6 @@ http://localhost:5000/admin/edit
 `registrationPeriod` - Number required
 
 `payment` - Number required
-
-`phone` - String required - значением поля может быть пустая строка
 
 `comment` - String not required
 

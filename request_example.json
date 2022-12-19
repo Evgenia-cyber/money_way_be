@@ -6,7 +6,6 @@
     "registrationStartTime": 123,
     "registrationPeriod": 123,
     "payment": 123,
-    "phone": "123",
     "comment": "123"
   },
   "registration_wrong_request_body": {
@@ -16,7 +15,6 @@
     "registrationStartTime": 123,
     "registrationPeriod": 123,
     "payment": "a",
-    "phone": "123",
     "comment": "123"
   }
 }
