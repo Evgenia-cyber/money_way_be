@@ -88,7 +88,7 @@ class AuthController {
           .json({ message: 'Такого пользователя не существует' });
       }
       // создаём и сохраняем токены в БД и куках
-      const { roles } = savedUser;
+      const { roles, registrationEndTime } = savedUser;
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
         await addTokens(id, roles, res);
 
@@ -97,6 +97,7 @@ class AuthController {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
         roles,
+        registrationEndTime,
       });
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -23,7 +23,8 @@ http://localhost:5000/auth/login
     "message": "Пользователь успешно залогинился",
     "accessToken": "..........",
     "refreshToken": "..........",
-    "roles": [ "ADMIN" ]
+    "roles": [ "ADMIN" ],
+    "registrationEndTime": "2023-05-05"
 }
 ```
 
