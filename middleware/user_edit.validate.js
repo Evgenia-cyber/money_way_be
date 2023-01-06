@@ -5,6 +5,7 @@ const userEditValidate = () => [
   check('email', 'email не может быть пустым').notEmpty(),
   check('fullName', 'ФИО пользователя не может быть пустым').notEmpty(),
   check('registrationStartTime', 'Время регистрации не может быть пустым').notEmpty(),
+  check('registrationEndTime', 'Время окончания регистрации не может быть пустым').notEmpty(),
   check('registrationPeriod', 'Период оплаты не может быть пустым').notEmpty(),
   check('payment', 'Оплата не может быть пустой').notEmpty(),
 ];

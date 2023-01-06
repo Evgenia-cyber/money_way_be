@@ -10,7 +10,7 @@ const checkIsAdmin = (req, res, next) => {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
       return res
-        .status(statusCodes.FORBIDDEN)
+        .status(statusCodes.UNAUTHORIZED)
         .json({ message: 'Пользователь не авторизован' });
     }
     // token отправляют в заголовке authorization обычно в таком виде: "Bearer ............."
@@ -21,7 +21,7 @@ const checkIsAdmin = (req, res, next) => {
     // если нет данных
     if (!userData) {
       return res
-        .status(statusCodes.FORBIDDEN)
+        .status(statusCodes.UNAUTHORIZED)
         .json({ message: 'Пользователь не авторизован' });
     }
     const { roles: userRoles } = userData;
@@ -44,7 +44,7 @@ const checkIsAdmin = (req, res, next) => {
     // eslint-disable-next-line no-console
     console.log(error);
     return res
-      .status(statusCodes.FORBIDDEN)
+      .status(statusCodes.UNAUTHORIZED)
       .json({ message: 'Пользователь не авторизован', error });
   }
 };

@@ -42,7 +42,8 @@ class AdminController {
         email, // String uniq required
         password, // String required
         fullName, // String required
-        registrationStartTime, // Number required
+        registrationStartTime, // String required
+        registrationEndTime, // String required
         registrationPeriod, // Number required
         payment, // Number required
         comment, // String
@@ -71,6 +72,7 @@ class AdminController {
         password: hashPassword,
         fullName,
         registrationStartTime,
+        registrationEndTime,
         registrationPeriod,
         payment,
         comment,
@@ -126,7 +128,8 @@ class AdminController {
         _id, // String uniq required
         email, // String uniq required
         fullName, // String required
-        registrationStartTime, // Number required
+        registrationStartTime, // String required
+        registrationEndTime, // String required
         registrationPeriod, // Number required
         payment, // Number required
         comment, // String
@@ -139,6 +142,7 @@ class AdminController {
             email,
             fullName,
             registrationStartTime,
+            registrationEndTime,
             registrationPeriod,
             payment,
             comment,

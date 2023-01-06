@@ -66,7 +66,7 @@ http://localhost:5000/auth/refresh
 
 ---
 
-## 3. Регистрация нового пользователя - доступно только админу
+## 3. Регистрация нового клиента - доступно только админу
 
 **POST**
 
@@ -84,7 +84,9 @@ http://localhost:5000/admin/add
 
 `fullName` - String required
 
-`registrationStartTime` - Number required
+`registrationStartTime` - String required
+
+`registrationEndTime` - String required
 
 `registrationPeriod` - Number required
 
@@ -98,7 +100,7 @@ http://localhost:5000/admin/add
 
 ```
 {
-    "message": "Новый пользователь успешно добавлен",
+    "message": "Новый клиент успешно добавлен",
 }
 ```
 
@@ -108,7 +110,7 @@ http://localhost:5000/admin/add
 
 ---
 
-## 4. Получение всех пользователей - доступно только админу
+## 4. Получение всех клиентов - доступно только админу
 
 **GET**
 
@@ -124,35 +126,28 @@ http://localhost:5000/admin/users
 
 ```
 {
-    "message": "getAllUsers success",
+    "message": "Клиенты успешно получены",
     "users": [
         {
-            "email": "1@mail.ru",
-            "fullName": " ",
-            "registrationStartTime": 123,
-            "registrationPeriod": 123,
-            "payment": 123,
-            "comment": "123",
+            "email": "111@mail.ru",
+            "fullName": "Jen",
+            "registrationStartTime": "2023-01-06",
+            "registrationEndTime": "2023-04-06",
+            "registrationPeriod": 3,
+            "payment": 1000,
+            "comment": "some comment",
             "__v": 0
         },
         {
-            "email": "2@mail.ru",
-            "fullName": " ",
-            "registrationStartTime": 123,
-            "registrationPeriod": 123,
-            "payment": 123,
-            "comment": "123",
+            "email": "222@mail.ru",
+            "fullName": "Jen",
+            "registrationStartTime": "2023-02-05",
+            "registrationEndTime": "2023-05-05",
+            "registrationPeriod": 3,
+            "payment": 1000,
+            "comment": "",
             "__v": 0
         },
-        {
-            "email": "7@mail.ru",
-            "fullName": "admin",
-            "registrationStartTime": 0,
-            "registrationPeriod": 0,
-            "payment": 0,
-            "comment": " ",
-            "__v": 0
-        }
     ]
 }
 ```
@@ -164,7 +159,7 @@ http://localhost:5000/admin/users
 
 ---
 
-## 5. Редактирование информации о пользователе - доступно только админу
+## 5. Редактирование информации о клиенте - доступно только админу
 
 **PUT**
 
@@ -182,7 +177,9 @@ http://localhost:5000/admin/edit
 
 `fullName` - String required
 
-`registrationStartTime` - Number required
+`registrationStartTime` - String required
+
+`registrationEndTime` - String required
 
 `registrationPeriod` - Number required
 
@@ -197,7 +194,7 @@ http://localhost:5000/admin/edit
 ```
 {
 
-    "message": "Информация о пользователе успешно изменена"
+    "message": "Информация о клиенте успешно изменена"
 
 }
 ```
@@ -208,7 +205,7 @@ http://localhost:5000/admin/edit
 
 ---
 
-## 6. Удаление пользователя - доступно только админу
+## 6. Удаление клиента - доступно только админу
 
 **DELETE**
 
@@ -229,7 +226,7 @@ http://localhost:5000/admin/delete
 ```
 {
 
-    "message": "Пользователь успешно удалён"
+    "message": "Клиент успешно удалён"
 
 }
 ```

@@ -12,6 +12,10 @@ const registrationValidate = () => [
     'registrationStartTime',
     'Время регистрации не может быть пустым'
   ).notEmpty(),
+  check(
+    'registrationEndTime',
+    'Время окончания регистрации не может быть пустым'
+  ).notEmpty(),
   check('registrationPeriod', 'Период оплаты не может быть пустым').notEmpty(),
   check('payment', 'Оплата не может быть пустой').notEmpty(),
 ];
