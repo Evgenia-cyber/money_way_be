@@ -1,4 +1,7 @@
-const getTimeToday = () => new Date().toISOString().split('T')[0].getTime();
+const getTimeToday = () => {
+  const today = new Date().toISOString().split('T')[0];
+  return new Date(today).getTime();
+};
 
 const isRegistrationStarted = (startDate, timeToday) => {
   const registrationStartTime = new Date(startDate).getTime();

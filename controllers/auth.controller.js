@@ -37,12 +37,10 @@ class AuthController {
         user.registrationEndTime
       );
       if (isNotAdmin && isNotValidRegistration) {
-        return res
-          .status(statusCodes.FORBIDDEN)
-          .json({
-            message:
-              'Приложение не доступно. Уточните срок действия оплаты у администратора.',
-          });
+        return res.status(statusCodes.FORBIDDEN).json({
+          message:
+            'Приложение не доступно. Уточните срок действия оплаты у администратора.',
+        });
       }
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
       const isPasswordValid = bcrypt.compareSync(password, user.password);
@@ -104,17 +102,17 @@ class AuthController {
       }
       // проверяем, валидный ли у пользователя период действия оплаты
       const isNotAdmin = !savedUser.roles.includes(ROLES.ADMIN);
-      const isNotValidRegistration = !isRegistrationPeriodValid(
-        savedUser.registrationStartTime,
-        savedUser.registrationEndTime
-      );
-      if (isNotAdmin && isNotValidRegistration) {
-        return res
-          .status(statusCodes.FORBIDDEN)
-          .json({
+      if (isNotAdmin) {
+        const isNotValidRegistration = !isRegistrationPeriodValid(
+          savedUser.registrationStartTime,
+          savedUser.registrationEndTime
+        );
+        if (isNotValidRegistration) {
+          return res.status(statusCodes.FORBIDDEN).json({
             message:
               'Приложение не доступно. Уточните срок действия оплаты у администратора.',
           });
+        }
       }
       // создаём и сохраняем токены в БД и куках
       const { roles, registrationEndTime } = savedUser;
