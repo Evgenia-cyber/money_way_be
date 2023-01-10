@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
-const { statusCodes } = require('../constants');
+const { statusCodes, roles: ROLES } = require('../constants');
 const User = require('../models/User');
 const addTokens = require('../utils/addTokens');
+const isRegistrationPeriodValid = require('../utils/date');
 const TokenUtil = require('../utils/Token');
 
 class AuthController {
@@ -28,6 +29,14 @@ class AuthController {
         return res
           .status(statusCodes.FORBIDDEN)
           .json({ message: 'Введён неверный email и/или пароль' });
+      }
+      // проверяем, валидный ли у пользователя период действия оплаты
+      const isNotAdmin = !user.roles.includes(ROLES.ADMIN);
+      const isNotValidRegistration = !isRegistrationPeriodValid(user.registrationStartTime, user.registrationEndTime);
+      if (isNotAdmin && isNotValidRegistration) {
+        return res
+          .status(statusCodes.FORBIDDEN)
+          .json({ message: 'Приложение не доступно. Уточните срок действия оплаты у администратора.' });
       }
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
       const isPasswordValid = bcrypt.compareSync(password, user.password);
