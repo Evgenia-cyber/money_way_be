@@ -76,6 +76,9 @@ class AuthController {
       const { refreshToken } = req.cookies;
       // если токена нет, то пользователь не авторизован
       if (!refreshToken) {
+        console.log('No refreshToken in cookies');
+      }
+      if (!refreshToken) {
         return res
           .status(statusCodes.UNAUTHORIZED)
           .json({ message: 'Пользователь не авторизован' });
@@ -85,6 +88,12 @@ class AuthController {
       const userData = TokenUtil.validateRefreshToken(refreshToken);
 
       const tokenData = await TokenUtil.findToken(refreshToken);
+      if (!userData) {
+        console.log('No user data from refreshToken');
+      }
+      if (!tokenData) {
+        console.log('No this refreshToken in DB');
+      }
       if (!userData || !tokenData) {
         return res
           .status(statusCodes.UNAUTHORIZED)
