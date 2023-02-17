@@ -11,16 +11,21 @@ const addTokens = async (id, roles, res) => {
 
   const { MODE } = process.env;
 
+  const maxAge = 30 * 24 * 60 * 60 * 1000; // кука, как и refreshToken, будет жить 30 дней
+
   // записываем refreshToken в cookie:
-  if (MODE === 'development') { // разработка
+  if (MODE === 'development') {
+    // разработка
     res.cookie('refreshToken', refreshToken, {
-      maxAge: 30 * 24 * 60 * 60 * 1000, // кука, как и refreshToken, будет жить 30 дней
+      maxAge,
       httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
-      sameSite: false,
+      sameSite: 'lax',
+      secure: false, // для работы с http соединением
     });
   } else {
-    res.cookie('refreshToken', refreshToken, { // продакшн
-      maxAge: 30 * 24 * 60 * 60 * 1000, // кука, как и refreshToken, будет жить 30 дней
+    // продакшн
+    res.cookie('refreshToken', refreshToken, {
+      maxAge,
       httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
       sameSite: 'none',
       secure: true, // для https - соединение должно быть установлено через HTTPS, иначе в cookie ничего не запишется
