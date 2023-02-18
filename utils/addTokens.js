@@ -9,8 +9,8 @@ const addTokens = async (id, roles, res) => {
   // сохраняем refreshToken в БД
   await TokenUtil.saveToken(id, refreshToken);
 
-  const { MODE } = process.env;
-
+  const { MODE, DOMAIN } = process.env;
+  console.log('DOMAIN', DOMAIN);
   const maxAge = 30 * 24 * 60 * 60 * 1000; // кука, как и refreshToken, будет жить 30 дней
 
   // записываем refreshToken в cookie:
@@ -29,6 +29,8 @@ const addTokens = async (id, roles, res) => {
       httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
       sameSite: 'none',
       secure: true, // для https - соединение должно быть установлено через HTTPS, иначе в cookie ничего не запишется
+      domain: DOMAIN,
+      path: '/'
     });
   }
 
