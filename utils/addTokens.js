@@ -27,7 +27,7 @@ const addTokens = async (id, roles, res) => {
     res.cookie('refreshToken', refreshToken, {
       maxAge,
       httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
-      sameSite: 'none',
+      sameSite: 'None',
       secure: true, // для https - соединение должно быть установлено через HTTPS, иначе в cookie ничего не запишется
       domain: DOMAIN,
       path: '/'
