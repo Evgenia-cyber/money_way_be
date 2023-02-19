@@ -93,6 +93,7 @@ class AuthController {
 
       // если токена нет, то пользователь не авторизован
       if (!refreshToken) {
+        console.log('headers cookies: ', request.headers.cookies);
         console.log('No refreshToken in cookies: ', request.cookies);
 
         return response
