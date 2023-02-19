@@ -72,6 +72,7 @@ class AuthController {
   // обновление токенов
   static async refresh(req, res) {
     try {
+      console.log('req.cookies', req.cookies);
       // достаём refreshToken из cookies
       const { refreshToken } = req.cookies;
       // если токена нет, то пользователь не авторизован
