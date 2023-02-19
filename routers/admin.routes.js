@@ -1,5 +1,5 @@
 // vendor imports
-const express = require('express');
+const Routes = require('express');
 
 // local imports
 // controllers
@@ -10,24 +10,24 @@ const userEditValidate = require('../middleware/user_edit.validate');
 const checkIsAdmin = require('../middleware/check_is_admin');
 const checkIsUserExists = require('../middleware/check_is_user_exists');
 
-const app = express();
+const router = Routes();
 
 // http://localhost:5000/admin/roles
-app.post(
+router.post(
   '/roles',
   checkIsAdmin,
   AdminController.saveRoles
 );
 
 // http://localhost:5000/admin/users
-app.get(
+router.get(
   '/users',
   checkIsAdmin,
   AdminController.getAllUsers
 );
 
 // http://localhost:5000/admin/add
-app.post(
+router.post(
   '/add',
   checkIsAdmin,
   registrationValidate(),
@@ -35,7 +35,7 @@ app.post(
 );
 
 // http://localhost:5000/admin/edit
-app.put(
+router.put(
   '/edit',
   checkIsAdmin,
   userEditValidate(),
@@ -44,11 +44,11 @@ app.put(
 );
 
 // http://localhost:5000/admin/delete
-app.delete(
+router.delete(
   '/delete',
   checkIsAdmin,
   checkIsUserExists,
   AdminController.deleteUser
 );
 
-module.exports = app;
+module.exports = router;

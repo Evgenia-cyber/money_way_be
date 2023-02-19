@@ -88,13 +88,12 @@ class AuthController {
     console.log('Refresh process started');
 
     try {
-      console.log('request cookies', request.cookies);
       // достаём refreshToken из cookies
       const { refreshToken } = request.cookies;
 
       // если токена нет, то пользователь не авторизован
       if (!refreshToken) {
-        console.log('In cookies no refreshToken ', refreshToken);
+        console.log('No refreshToken in cookies: ', request.cookies);
 
         return response
           .status(statusCodes.UNAUTHORIZED)
