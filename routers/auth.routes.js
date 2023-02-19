@@ -1,14 +1,18 @@
-const Router = require('express');
-const controller = require('../controllers/auth.controller');
+// vendor imports
+const express = require('express');
+
+// local imports
+// controllers
+const AuthController = require('../controllers/auth.controller');
+// middlewares
 const loginValidate = require('../middleware/login.validate');
 
-
-const router = new Router();
+const app = express();
 
 // http://localhost:5000/auth/login
-router.post('/login',loginValidate(), controller.login);
+app.post('/login', loginValidate(), AuthController.login);
 
 // http://localhost:5000/auth/refresh
-router.get('/refresh', controller.refresh);
+app.get('/refresh', AuthController.refresh);
 
-module.exports = router;
+module.exports = app;

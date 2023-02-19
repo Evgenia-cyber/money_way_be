@@ -1,7 +1,11 @@
+// vendor imports
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
+// local imports
+// routers
 const authRouter = require('./routers/auth.routes');
 const adminRouter = require('./routers/admin.routes');
 
