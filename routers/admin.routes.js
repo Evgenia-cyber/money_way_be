@@ -10,7 +10,7 @@ const userEditValidate = require('../middleware/user_edit.validate');
 const checkIsAdmin = require('../middleware/check_is_admin');
 const checkIsUserExists = require('../middleware/check_is_user_exists');
 
-const router = Routes();
+const router = new Routes();
 
 // http://localhost:5000/admin/roles
 router.post(
