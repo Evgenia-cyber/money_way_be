@@ -1,6 +1,6 @@
 const TokenUtil = require('./Token');
 
-const addTokens = async (id, roles, res) => {
+const addTokens = async (id, roles, response) => {
   // создаем токены
   const { accessToken, refreshToken } = TokenUtil.generateTokens({ id, roles });
   // сохраняем refreshToken в БД
@@ -11,7 +11,7 @@ const addTokens = async (id, roles, res) => {
   // записываем refreshToken в cookie:
   if (process.env.MODE === 'development') {
     // разработка
-    res.cookie('refreshToken', refreshToken, {
+    response.cookie('refreshToken', refreshToken, {
       maxAge,
       httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
       sameSite: 'Lax',
@@ -20,7 +20,7 @@ const addTokens = async (id, roles, res) => {
     console.log('cookie created successfully');
   } else {
     // продакшн
-    res.cookie('refreshToken', refreshToken, {
+    response.cookie('refreshToken', refreshToken, {
       maxAge,
       // httpOnly: true, // чтобы cookie нельзя было изменять внутри браузера с JS
       sameSite: 'None',

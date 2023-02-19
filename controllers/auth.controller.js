@@ -15,10 +15,12 @@ const TokenUtil = require('../utils/Token');
 class AuthController {
   // авторизация пользователя
   static async login(request, response) {
+    console.log('login process started');
     try {
       // валидируем данные, полученные с клиента
       const validationErrors = validationResult(request);
       if (!validationErrors.isEmpty()) {
+        console.log('validation errors is empty');
         return response.status(statusCodes.BAD_REQUEST).json({
           message: `Ошибка при логине:`,
           errors: validationErrors,
@@ -32,6 +34,8 @@ class AuthController {
 
       const user = await User.findOne({ email });
       if (!user) {
+        console.log('no find email in mongodb');
+
         return response
           .status(statusCodes.FORBIDDEN)
           .json({ message: 'Введён неверный email и/или пароль' });
@@ -43,14 +47,17 @@ class AuthController {
         user.registrationEndTime
       );
       if (isNotAdmin && isNotValidRegistration) {
+        console.log('registration time is not valid');
+
         return response.status(statusCodes.FORBIDDEN).json({
-          message:
-            'Приложение не доступно. Уточните срок действия оплаты у администратора.',
+          message: 'Приложение не доступно. Уточните срок действия оплаты у администратора.',
         });
       }
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
       const isPasswordValid = bcrypt.compareSync(password, user.password);
       if (!isPasswordValid) {
+        console.log('password not correctly');
+
         return response
           .status(statusCodes.FORBIDDEN)
           .json({ message: 'Введён неверный email и/или пароль' });
@@ -60,6 +67,7 @@ class AuthController {
       const { _id, roles } = user;
       const { accessToken, refreshToken } = await addTokens(_id, roles, response);
 
+      console.log('user login successfully');
       return response.status(statusCodes.OK).json({
         message: 'Пользователь успешно залогинился',
         accessToken,
@@ -77,6 +85,8 @@ class AuthController {
 
   // обновление токенов
   static async refresh(request, response) {
+    console.log('Refresh process started');
+
     try {
       console.log('request cookies', request.cookies);
       // достаём refreshToken из cookies
@@ -101,7 +111,7 @@ class AuthController {
       }
 
       if (!tokenData) {
-        console.log('No in DB this refreshToken ', refreshToken);
+        console.log('No refreshToken in mongodb. Refresh token: ', refreshToken);
       }
 
       if (!userData || !tokenData) {
@@ -116,6 +126,8 @@ class AuthController {
       const savedUser = await User.findById(id);
 
       if (!savedUser) {
+        console.log('No user data in mongodb. User id: ', id);
+
         return response
           .status(statusCodes.NOT_FOUND)
           .json({ message: 'Такого пользователя не существует' });
@@ -125,15 +137,18 @@ class AuthController {
       const isNotAdmin = !savedUser.roles.includes(ROLES.ADMIN);
 
       if (isNotAdmin) {
+        console.log('User is not admin');
+
         const isNotValidRegistration = !isRegistrationPeriodValid(
           savedUser.registrationStartTime,
           savedUser.registrationEndTime
         );
 
         if (isNotValidRegistration) {
+          console.log('Is not valid registration time');
+
           return response.status(statusCodes.FORBIDDEN).json({
-            message:
-              'Приложение не доступно. Уточните срок действия оплаты у администратора.',
+            message: 'Приложение не доступно. Уточните срок действия оплаты у администратора.',
           });
         }
       }
@@ -142,6 +157,7 @@ class AuthController {
       const { roles, registrationEndTime } = savedUser;
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await addTokens(id, roles, response);
 
+      console.log('Token updated successfully');
       return response.status(statusCodes.OK).json({
         message: 'Токены успешно обновлены',
         accessToken: newAccessToken,
