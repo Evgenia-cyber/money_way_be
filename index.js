@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true, // разрешаем куки (в куках хранится refreshToken)
-    origin: FRONTEND_URL, // url фрондента
+    origin: [FRONTEND_URL], // url фрондента
   })
 );
 
