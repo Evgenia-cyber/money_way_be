@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // vendor imports
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
@@ -15,12 +16,14 @@ const TokenUtil = require('../utils/Token');
 class AuthController {
   // авторизация пользователя
   static async login(request, response) {
-    console.log('login process started');
+    console.log('Login process started');
+
     try {
       // валидируем данные, полученные с клиента
       const validationErrors = validationResult(request);
       if (!validationErrors.isEmpty()) {
-        console.log('validation errors is empty');
+        console.log('Validation errors is empty');
+
         return response.status(statusCodes.BAD_REQUEST).json({
           message: `Ошибка при логине:`,
           errors: validationErrors,
@@ -34,7 +37,7 @@ class AuthController {
 
       const user = await User.findOne({ email });
       if (!user) {
-        console.log('no find email in mongodb');
+        console.log('No find email in mongodb');
 
         return response
           .status(statusCodes.FORBIDDEN)
@@ -47,7 +50,7 @@ class AuthController {
         user.registrationEndTime
       );
       if (isNotAdmin && isNotValidRegistration) {
-        console.log('registration time is not valid');
+        console.log('Registration time is not valid');
 
         return response.status(statusCodes.FORBIDDEN).json({
           message: 'Приложение не доступно. Уточните срок действия оплаты у администратора.',
@@ -56,7 +59,7 @@ class AuthController {
       // если пользователь с таким email найден в БД, то сравниваем введённый и пользователем захешированный пароль
       const isPasswordValid = bcrypt.compareSync(password, user.password);
       if (!isPasswordValid) {
-        console.log('password not correctly');
+        console.log('Password not correctly');
 
         return response
           .status(statusCodes.FORBIDDEN)
@@ -67,7 +70,8 @@ class AuthController {
       const { _id, roles } = user;
       const { accessToken, refreshToken } = await addTokens(_id, roles, response);
 
-      console.log('user login successfully');
+      console.log('User login successfully');
+
       return response.status(statusCodes.OK).json({
         message: 'Пользователь успешно залогинился',
         accessToken,
@@ -75,8 +79,8 @@ class AuthController {
         roles,
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log('Login error: ', error);
+
       return response
         .status(statusCodes.BAD_REQUEST)
         .json({ message: `Login error: ${error}` });
@@ -93,8 +97,7 @@ class AuthController {
 
       // если токена нет, то пользователь не авторизован
       if (!refreshToken) {
-        console.log('request: ', request);
-        console.log('No refreshToken in cookies: ', request.cookies);
+        console.log('No refreshToken in cookies. Cookies: ', request.cookies);
 
         return response
           .status(statusCodes.UNAUTHORIZED)
@@ -158,6 +161,7 @@ class AuthController {
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await addTokens(id, roles, response);
 
       console.log('Token updated successfully');
+
       return response.status(statusCodes.OK).json({
         message: 'Токены успешно обновлены',
         accessToken: newAccessToken,
@@ -166,7 +170,6 @@ class AuthController {
         registrationEndTime,
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log('Refresh error: ', error);
 
       return response

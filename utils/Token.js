@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // vendor imports
 const jwt = require('jsonwebtoken');
 
@@ -10,12 +11,12 @@ class TokenUtil {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS, {
       expiresIn: '15s',
     });
-    console.log('accessToken created successfully');
+    console.log('Access token created successfully');
 
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH, {
       expiresIn: '30d',
     });
-    console.log('refreshToken created successfully');
+    console.log('Refresh token created successfully');
 
     return {
       accessToken,
@@ -31,14 +32,14 @@ class TokenUtil {
       // если в БД нашли данные, то перезаписываем refreshToken на новый
       tokenData.refreshToken = refreshToken;
 
-      console.log('refreshToken resaved successfully');
+      console.log('Refresh token resaved successfully');
       return tokenData.save(); // сохраняем данные в БД
     }
 
     // иначе создаем в БД новую запись
     const token = await Token.create({ userId, refreshToken });
 
-    console.log('refreshToken recreated successfully');
+    console.log('Add new refresh token to mongodb');
     return token;
   }
 
@@ -47,10 +48,12 @@ class TokenUtil {
       // верифицируем (декодируем) токен и получим инфо, которую в него вшивали
       const validatedToken = jwt.verify(token, process.env.JWT_ACCESS);
 
-      console.log('access token validated successfully');
+      console.log('Access token validated successfully');
+
       return validatedToken;
     } catch (error) {
-      console.log('access token validated error');
+      console.log('Access token validated error');
+
       return null;
     }
   }
@@ -60,16 +63,20 @@ class TokenUtil {
       // верифицируем (декодируем) токен и получим инфо, которую в него вшивали
       const validatedToken = jwt.verify(token, process.env.JWT_REFRESH);
 
-      console.log('refresh token validated successfully');
+      console.log('Refresh token validated successfully');
+
       return validatedToken;
     } catch (error) {
-      console.log('refresh token validated error');
+      console.log('Refresh token validated error', error);
+
       return null;
     }
   }
 
   static async findToken(refreshToken) {
     const tokenData = await Token.findOne({ refreshToken });
+    console.log('Find refresh token successfully', tokenData);
+
     return tokenData;
   }
 }

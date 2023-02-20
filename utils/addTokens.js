@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const TokenUtil = require('./Token');
 
 const addTokens = async (id, roles, response) => {
@@ -17,7 +18,8 @@ const addTokens = async (id, roles, response) => {
       sameSite: 'Lax',
       secure: false, // для работы с http соединением
     });
-    console.log('cookie created successfully');
+
+    console.log('Add tokens to cookie successfully', response.cookies);
   } else {
     // продакшн
     response.cookie('refreshToken', refreshToken, {
@@ -26,7 +28,8 @@ const addTokens = async (id, roles, response) => {
       sameSite: 'None',
       secure: true, // для https - соединение должно быть установлено через HTTPS, иначе в cookie ничего не запишется
     });
-    console.log('cookie created successfully');
+
+    console.log('Add tokens to cookie successfully', response);
   }
 
   return {

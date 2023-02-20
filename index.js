@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // vendor imports
 const express = require('express');
 const mongoose = require('mongoose');
@@ -33,14 +34,11 @@ app.use('/admin', adminRouter);
 const start = async () => {
   try {
     await mongoose.connect(`${MONGO_DB_URL}`);
-    // eslint-disable-next-line no-console
     console.log('MongoDB connected');
 
-    // eslint-disable-next-line no-console
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('Failed to connect to MongoDB: ', error);
+    console.log('Failed connected to MongoDB: ', error);
   }
 };
 
