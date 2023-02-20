@@ -32,7 +32,7 @@ class TokenUtil {
       // если в БД нашли данные, то перезаписываем refreshToken на новый
       tokenData.refreshToken = refreshToken;
 
-      console.log('Refresh token resaved successfully');
+      console.log('Refresh token resaved in mongodb successfully');
       return tokenData.save(); // сохраняем данные в БД
     }
 

@@ -29,7 +29,7 @@ const addTokens = async (id, roles, response) => {
       secure: true, // для https - соединение должно быть установлено через HTTPS, иначе в cookie ничего не запишется
     });
 
-    console.log('Add tokens to cookie successfully', response);
+    console.log('Add tokens to response cookie successfully', response.cookies);
   }
 
   return {
