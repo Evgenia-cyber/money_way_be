@@ -1,15 +1,21 @@
+/* eslint-disable no-console */
 const { statusCodes, roles } = require('../constants');
 const TokenUtil = require('../utils/Token');
 
-const checkIsAdmin = (req, res, next) => {
-  if (req.method === 'OPTIONS') {
+const checkIsAdmin = (request, response, next) => {
+  console.log('CheckIsAdmin process start');
+
+  if (request.method === 'OPTIONS') {
+    console.log('Check is admin method equil options');
     next();
   }
 
   try {
-    const authorizationHeader = req.headers.authorization;
+    const authorizationHeader = request.headers.authorization;
     if (!authorizationHeader) {
-      return res
+      console.log('Пользователь не авторизован. Отсутствует authorizationHeader');
+
+      return response
         .status(statusCodes.UNAUTHORIZED)
         .json({ message: 'Пользователь не авторизован' });
     }
@@ -20,7 +26,9 @@ const checkIsAdmin = (req, res, next) => {
     const userData = TokenUtil.validateAccessToken(token); // получаем объект с id и roles пользователя
     // если нет данных
     if (!userData) {
-      return res
+      console.log('Пользователь не авторизован. Отсутствует userData');
+
+      return response
         .status(statusCodes.UNAUTHORIZED)
         .json({ message: 'Пользователь не авторизован' });
     }
@@ -33,17 +41,20 @@ const checkIsAdmin = (req, res, next) => {
     }
 
     if (!hasRequiredRole) {
-      return res
+      console.log('Список ролей не содержит admin');
+
+      return response
         .status(statusCodes.FORBIDDEN)
         .json({ message: 'У Вас нет доступа' });
     }
 
+    console.log('Пользователь успешно авторизован');
     next();
     return null;
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
-    return res
+    console.log('Пользователь не авторизован', error);
+
+    return response
       .status(statusCodes.UNAUTHORIZED)
       .json({ message: 'Пользователь не авторизован', error });
   }

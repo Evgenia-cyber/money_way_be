@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const { statusCodes, roles } = require('../constants');
@@ -14,12 +15,12 @@ class AdminController {
       await adminRole.save();
       await userRole.save();
 
+      console.log('Roles saved successfully');
       return res
         .status(statusCodes.OK)
         .json({ message: 'Роли успешно сохранены' });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Registration error: ', error);
+      console.log('Roles saved error: ', error);
       return res
         .status(statusCodes.BAD_REQUEST)
         .json({ message: `Registration error: ${error}` });
@@ -78,14 +79,17 @@ class AdminController {
         comment,
         roles: [userRole.role],
       });
+
       await newUser.save();
+
+      console.log('Add new user successfully');
 
       return res.status(statusCodes.OK).json({
         message: 'Новый пользователь успешно добавлен',
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Registration error: ', error);
+      console.log('Add new user error: ', error);
+
       return res
         .status(statusCodes.BAD_REQUEST)
         .json({ message: `Registration error: ${error}` });
@@ -100,12 +104,14 @@ class AdminController {
         { password: false, roles: false }
       );
 
+      console.log('Call all users successfully');
+
       return res
         .status(statusCodes.OK)
         .json({ message: 'getAllUsers success', users });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('getAllUsers error: ', error);
+      console.log('Get all users error: ', error);
+
       return res
         .status(statusCodes.BAD_REQUEST)
         .json({ message: `getAllUsers error: ${error}` });
@@ -117,6 +123,7 @@ class AdminController {
     try {
       // валидируем данные, полученные с клиента
       const validationErrors = validationResult(req);
+
       if (!validationErrors.isEmpty()) {
         return res.status(statusCodes.BAD_REQUEST).json({
           message: `Ошибка при редактировании информации о пользователе:`,
@@ -150,12 +157,14 @@ class AdminController {
         }
       );
 
+      console.log('Edit user successfully');
+
       return res
         .status(statusCodes.OK)
         .json({ message: 'Информация о пользователе успешно изменена' });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('editUser error: ', error);
+      console.log('Edit user error: ', error);
+
       return res
         .status(statusCodes.BAD_REQUEST)
         .json({ message: `editUser error: ${error}` });
@@ -172,12 +181,14 @@ class AdminController {
       await User.deleteOne({ _id });
       await Token.deleteOne({ userId: _id });
 
+      console.log('Delete user successfully');
+
       return res
         .status(statusCodes.OK)
         .json({ message: 'Пользователь успешно удалён' });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('deleteUser error: ', error);
+      console.log('Delete user error: ', error);
+
       return res
         .status(statusCodes.BAD_REQUEST)
         .json({ message: `deleteUser error: ${error}` });
