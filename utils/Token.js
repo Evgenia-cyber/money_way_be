@@ -9,14 +9,14 @@ const Token = require('../models/Token');
 class TokenUtil {
   static generateTokens(payload) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS, {
-      expiresIn: '15s',
+      expiresIn: '1h',
     });
-    console.log('Access token created successfully');
+    console.log('Access token created successfully. Token: ', accessToken);
 
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH, {
       expiresIn: '30d',
     });
-    console.log('Refresh token created successfully');
+    console.log('Refresh token created successfully. Token: ', refreshToken);
 
     return {
       accessToken,
@@ -48,11 +48,11 @@ class TokenUtil {
       // верифицируем (декодируем) токен и получим инфо, которую в него вшивали
       const validatedToken = jwt.verify(token, process.env.JWT_ACCESS);
 
-      console.log('Access token validated successfully');
+      console.log('Access token validated successfully. Validated token: ', validatedToken);
 
       return validatedToken;
     } catch (error) {
-      console.log('Access token validated error');
+      console.log('Access token validated error: ', error);
 
       return null;
     }
