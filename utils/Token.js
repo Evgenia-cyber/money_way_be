@@ -9,7 +9,7 @@ const Token = require('../models/Token');
 class TokenUtil {
   static generateTokens(payload) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS, {
-      expiresIn: '15s',
+      expiresIn: '1h',
     });
     console.log('Access token created successfully. Token: ', accessToken);
 
